@@ -41,7 +41,7 @@ class DB(metaclass=Singleton):
     def __insert_new_cycle(self, cycle: dict):
         self.cursor.execute(
             "INSERT INTO cycles (cycles_id, produce_blocks, failed_blocks, added_time) VALUES(%s, %s, %s, %s) ON CONFLICT DO NOTHING",
-            (cycle['id'], cycle['produce_blocks'], cycle['failed_blocks'], datetime.now()))
+            (cycle['cycles_id'], cycle['produce_blocks'], cycle['failed_blocks'], datetime.now()))
 
     def get_all_cycles(self):
         self.cursor.execute("""SELECT * FROM cycles""")

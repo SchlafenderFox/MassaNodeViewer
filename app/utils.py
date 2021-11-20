@@ -27,7 +27,7 @@ def get_cycles_info(cycles: str):
             info['failed_blocks'] = int(re.search(r'(?<=failed )[0-9]+', cycle).group(0))
             info['cycles_id'] = int(re.search(r'(?<=cycle )[0-9]+', cycle).group(0))
         except:
-            return None, None, None
+            continue
 
         parsed_cycles.append(info)
 
@@ -53,13 +53,13 @@ def get_additional_info():
     node_info, cycles_info = output.split('Cycles:')
 
     node_info_lines = node_info.split('\n')
-    address = node_info_lines[0]
-    final_balance = node_info_lines[1]
-    candidate_balance = node_info_lines[2]
-    locked_balance = node_info_lines[3]
-    active_rolls = node_info_lines[4]
-    final_rolls = node_info_lines[5]
-    candidate_rolls = node_info_lines[6]
+    address = node_info_lines[0].split(':')[-1]
+    final_balance = node_info_lines[1].split(':')[-1]
+    candidate_balance = node_info_lines[2].split(':')[-1]
+    locked_balance = node_info_lines[3].split(':')[-1]
+    active_rolls = node_info_lines[4].split(':')[-1]
+    final_rolls = node_info_lines[5].split(':')[-1]
+    candidate_rolls = node_info_lines[6].split(':')[-1]
 
     additional = "{" + f'address="{address}"' + "}"
 
