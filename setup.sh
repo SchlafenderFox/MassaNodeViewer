@@ -49,6 +49,7 @@ After=online.target
 User=root
 Environment=
 ExecStart=/usr/bin/python3 /root/MassaNodeViewer/manage.py
+WorkingDirectory=/root/MassaNodeViewer/
 Restart=on-failure
 RestartSec=3
 LimitNOFILE=4096
