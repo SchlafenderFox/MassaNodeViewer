@@ -36,15 +36,19 @@ def get_cycles_info(cycles: str):
 
     stored_cycles = db.get_all_cycles()
 
-    active_cycles = len(stored_cycles)
+    nb_cycles = len(stored_cycles)
 
     produce_blocks = 0
     failed_blocks = 0
+    active_cycle = 0
     for cycle in stored_cycles:
         produce_blocks += cycle['produce_blocks']
         failed_blocks += cycle['failed_blocks']
 
-    return active_cycles, produce_blocks, failed_blocks
+        if cycle['produce_blocks'] > 0 and cycle['failed_blocks'] > 0:
+            active_cycle += 1
+
+    return active_cycle, nb_cycles, produce_blocks, failed_blocks
 
 
 def get_additional_info():
@@ -82,14 +86,17 @@ def get_additional_info():
            f"# TYPE candidate_rolls gauge\n" \
            f"candidate_rolls{additional} {candidate_rolls}\n"
 
-    active_cycles, produce_blocks, failed_blocks = get_cycles_info(cycles_info)
+    active_cycle, nb_cycles, produce_blocks, failed_blocks = get_cycles_info(cycles_info)
 
-    if active_cycles is None or produce_blocks is None or failed_blocks is None:
+    if active_cycle is None or nb_cycles is None or produce_blocks is None or failed_blocks is None:
         return info
 
-    info = info + f"# HELP active_cycles\n" \
-                  f"# TYPE active_cycles gauge\n" \
-                  f"active_cycles{additional} {active_cycles}\n" \
+    info = info + f"# HELP active_cycle\n" \
+                  f"# TYPE active_cycle gauge\n" \
+                  f"active_cycle{additional} {active_cycle}\n" \
+                  f"# HELP nb_cycles\n" \
+                  f"# TYPE nb_cycles gauge\n" \
+                  f"nb_cycles{additional} {nb_cycles}\n" \
                   f"# HELP produce_blocks\n" \
                   f"# TYPE produce_blocks gauge\n" \
                   f"produce_blocks{additional} {produce_blocks}\n" \
