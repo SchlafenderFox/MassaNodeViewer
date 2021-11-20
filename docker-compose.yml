@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: bitnami/postgresql:11.7.0
+    restart: always
+    container_name: postgres
+    ports:
+      - 5434:5432
+    env_file:
+      - .env/vars
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+  node-exporter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    restart: always
+    ports:
+      - 9100:9100
