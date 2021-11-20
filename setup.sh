@@ -49,7 +49,7 @@ After=online.target
 #Type=root
 User=root
 Environment=
-ExecStart=cd /root/MassaNodeViewer/ && python3 -m pip install -r ./requirements.txt && python3 ./manage.py
+ExecStart=/usr/bin/python3 /root/MassaNodeViewer/manage.py
 Restart=on-failure
 RestartSec=3
 LimitNOFILE=4096
@@ -58,6 +58,7 @@ LimitNOFILE=4096
 WantedBy=multi-user.target
 " > /etc/systemd/system/massa-monitoring.service
 
+python3 -m pip install -r ./requirements.txt
 systemctl enable massa-monitoring --now
 
 IP=$(curl ifconfig.co)
