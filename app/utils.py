@@ -45,7 +45,7 @@ def get_cycles_info(cycles: str):
         produce_blocks += cycle['produce_blocks']
         failed_blocks += cycle['failed_blocks']
 
-        if cycle['produce_blocks'] > 0 and cycle['failed_blocks'] > 0:
+        if cycle['produce_blocks'] > 0 or cycle['failed_blocks'] > 0:
             active_cycle += 1
 
     return active_cycle, nb_cycles, produce_blocks, failed_blocks
