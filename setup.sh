@@ -22,8 +22,6 @@ fi
 
 echo "[INFO] MASTER_SERVER_IP set $MASTER_SERVER_IP"
 
-echo "MASTER_SERVER_IP=$MASTER_SERVER_IP" >> settings.env
-
 PASSWORD=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1)
 echo "POSTGRES_USER=db_user
 POSTGRES_DB=db
@@ -33,7 +31,8 @@ echo "PG_HOST='127.0.0.1'
 PG_PORT='5434'
 POSTGRES_USER='db_user'
 POSTGRES_DB='db'
-POSTGRES_PASSWORD='$PASSWORD'" > ./app/settings.py
+POSTGRES_PASSWORD='$PASSWORD'
+MASTER_SERVER_IP='$MASTER_SERVER_IP'" > ./app/settings.py
 
 echo "[INFO] Starting node explorer..."
 docker-compose up -d --build
